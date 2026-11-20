@@ -1,0 +1,5 @@
+Unique students: 2
+
+Student details:
+192311001 Arun
+192311002 Divya
