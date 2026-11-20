@@ -1,0 +1,7 @@
+import java.util.*;
+/* Analysis: PriorityQueue severity ascending then arrival sequence; offer/poll O(log n), peek O(1). Aging can reduce starvation but rebuild heap after recalculating; never mutate heap keys in place. */
+public class Q6 {
+ static class Patient{final String name;final int severity;final long arrival;Patient(String n,int s,long a){name=n;severity=s;arrival=a;}public String toString(){return name+"(S"+severity+")";}}
+ static class Triage{long seq=0;Comparator<Patient>order=Comparator.comparingInt((Patient p)->p.severity).thenComparingLong(p->p.arrival);PriorityQueue<Patient>q=new PriorityQueue<>(order);void admit(String n,int s){if(s<1||s>5)throw new IllegalArgumentException();q.add(new Patient(n,s,seq++));}Patient next(){return q.poll();}List<Patient>waiting(){List<Patient>c=new ArrayList<>(q);c.sort(order);return c;}}
+ public static void main(String[]x){Triage t=new Triage();t.admit("Ravi",3);t.admit("Meena",1);t.admit("John",3);t.admit("Asha",5);t.admit("Kumar",1);t.admit("Lata",2);t.admit("Sara",3);t.admit("Vijay",2);System.out.println("Waiting: "+t.waiting());StringBuilder b=new StringBuilder();Patient p;while((p=t.next())!=null)b.append(p).append(' ');System.out.println("Treatment: "+b.toString().trim());}
+}
