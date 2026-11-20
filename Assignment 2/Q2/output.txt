@@ -1,0 +1,18 @@
+Playlist size: 1000
+Append times (ms): ArrayList=0.075, LinkedList=0.082, ArrayDeque=0.179
+Front insertion times (ms): ArrayList=0.443, LinkedList=0.279, ArrayDeque=0.159
+Middle access times (ms): ArrayList=0.177, LinkedList=3.694
+
+Playlist size: 5000
+Append times (ms): ArrayList=0.063, LinkedList=0.062, ArrayDeque=0.053
+Front insertion times (ms): ArrayList=0.337, LinkedList=0.081, ArrayDeque=0.111
+Middle access times (ms): ArrayList=0.064, LinkedList=5.256
+
+Playlist size: 10000
+Append times (ms): ArrayList=0.075, LinkedList=0.061, ArrayDeque=0.051
+Front insertion times (ms): ArrayList=0.589, LinkedList=0.063, ArrayDeque=0.052
+Middle access times (ms): ArrayList=0.065, LinkedList=8.291
+
+Up Next Queue:
+Urgent Song
+Song A
