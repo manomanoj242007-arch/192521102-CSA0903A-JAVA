@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+ <rect width="1200" height="520" fill="#0d1117"/>
+ <rect width="1200" height="56" fill="#21262d"/>
+ <circle cx="28" cy="28" r="8" fill="#ff5f56"/><circle cx="54" cy="28" r="8" fill="#ffbd2e"/><circle cx="80" cy="28" r="8" fill="#27c93f"/>
+ <text x="600" y="36" fill="#e6edf3" text-anchor="middle" font-family="Arial" font-size="20">Q1 – Java Console Output</text>
+ <text x="42" y="115" fill="#7ee787" font-family="Consolas,monospace" font-size="24">Sample Ticket:</text><text x="42" y="169" fill="#e6edf3" font-family="Consolas,monospace" font-size="24">PNR: 12345 | Passenger: Arun | Coach: S1 | Berth: 12 | Fare: 450</text><text x="42" y="223" fill="#e6edf3" font-family="Consolas,monospace" font-size="24">Benchmark timing is printed for each of the three workloads.</text><text x="42" y="277" fill="#e6edf3" font-family="Consolas,monospace" font-size="24">Timing values vary by JVM and computer.</text>
+ <text x="42" y="478" fill="#8b949e" font-family="Arial" font-size="16">Illustrative output preview based on the program logic. Benchmark timings vary by machine and JVM.</text>
+ </svg>
