@@ -1,0 +1,17 @@
+Short ticket
+String average time: 0.022 ms
+StringBuilder average time: 0.010 ms
+StringBuffer average time: 0.013 ms
+
+Many fields
+String average time: 11.982 ms
+StringBuilder average time: 1.205 ms
+StringBuffer average time: 0.828 ms
+
+Many tickets
+String average time: 9.063 ms
+StringBuilder average time: 3.137 ms
+StringBuffer average time: 2.341 ms
+
+Sample Ticket:
+PNR: 12345 | Passenger: Arun | Coach: S1 | Berth: 12 | Fare: 450
