@@ -52,6 +52,31 @@ public class PassStore {
         return null;
     }
 
+    /** Returns all valid passes assigned to the requested route. */
+    public java.util.List<String[]> listByRoute(int wantedRoute) throws IOException {
+        java.util.List<String[]> matches = new java.util.ArrayList<>();
+        try (BufferedReader reader = Files.newBufferedReader(file)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",", -1);
+                if (fields.length != 5) {
+                    System.err.println("Skipping damaged line: " + line);
+                    continue;
+                }
+                try {
+                    int route = Integer.parseInt(fields[3]);
+                    Double.parseDouble(fields[4]);
+                    if (route == wantedRoute) {
+                        matches.add(fields);
+                    }
+                } catch (NumberFormatException error) {
+                    System.err.println("Skipping invalid numeric fields: " + line);
+                }
+            }
+        }
+        return matches;
+    }
+
     public static void main(String[] args) throws IOException {
         Path file = Files.createTempFile("passes", ".csv");
         PassStore store = new PassStore(file);
@@ -59,7 +84,7 @@ public class PassStore {
         Files.writeString(file, "P1002,DAMAGED LINE\n", StandardOpenOption.APPEND);
         store.add("P1003", "192311003", "Divya", 7, 3800);
         System.out.println(Arrays.toString(store.find("P1003")));
-        System.out.println(Arrays.toString(store.find("P1002")));
+        System.out.println(Arrays.toString(store.find("P1002")));\n        System.out.println("Route 7 passes: " + store.listByRoute(7).size());
         Files.deleteIfExists(file);
     }
 }
