@@ -1,0 +1,26 @@
+Number of medicines: 1000
+HashMap lookup time: 9.334 ms
+TreeMap lookup time: 11.109 ms
+LinkedHashMap lookup time: 5.797 ms
+First code in sorted report: MED00000
+First code in insertion report: MED00999
+Sorted report entries: 1000
+Insertion-order report entries: 1000
+
+Number of medicines: 5000
+HashMap lookup time: 7.253 ms
+TreeMap lookup time: 10.399 ms
+LinkedHashMap lookup time: 4.467 ms
+First code in sorted report: MED00000
+First code in insertion report: MED04999
+Sorted report entries: 5000
+Insertion-order report entries: 5000
+
+Number of medicines: 10000
+HashMap lookup time: 2.996 ms
+TreeMap lookup time: 10.187 ms
+LinkedHashMap lookup time: 2.115 ms
+First code in sorted report: MED00000
+First code in insertion report: MED09999
+Sorted report entries: 10000
+Insertion-order report entries: 10000
