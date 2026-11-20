@@ -1,0 +1,4 @@
+60.0
+Vehicle[TN02B2]
+Equal: true
+Same hash: true

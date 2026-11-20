@@ -1,0 +1,3 @@
+Tickets: 1001, 1002
+North occupancy: 1
+South occupancy: 1
