@@ -1,0 +1,5 @@
+Floors: 3
+Vehicle: TN01AB1234
+Billable hours: 3
+Fee at Rs 30/hour: Rs 90.0
+Incorrect 125/60: 2

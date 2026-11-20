@@ -1,0 +1,2 @@
+Ticket 101 | TN01AB1234 | [runtime timestamp]
+Copy: Ticket 101 | TN01AB1234 | [same timestamp]
