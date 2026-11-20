@@ -1,0 +1,18 @@
+Q7: Original and Redesigned Comparison
+Front add/remove operations: 5000
+
+Playlist size: 1000
+ArrayList time: 2.091 ms
+ArrayDeque time: 0.857 ms
+
+Playlist size: 10000
+ArrayList time: 4.703 ms
+ArrayDeque time: 0.486 ms
+
+Playlist size: 50000
+ArrayList time: 23.347 ms
+ArrayDeque time: 0.114 ms
+
+Redesign objective: reduce front operation cost.
+ArrayList front insertion/removal: O(n).
+ArrayDeque end operations: amortized O(1).
