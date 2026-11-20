@@ -19,7 +19,11 @@ public class LibrarySearch extends JFrame {
         searchPanel.add(searchText);
         searchPanel.add(category);
         searchPanel.add(new JButton("Search"));
-        add(searchPanel, BorderLayout.PAGE_START);
+
+        JPanel top = new JPanel(new BorderLayout());
+        top.add(title, BorderLayout.NORTH);
+        top.add(searchPanel, BorderLayout.SOUTH);
+        add(top, BorderLayout.NORTH);
 
         JList<String> resultList = new JList<>(results);
         results.addElement("Java Programming");
@@ -27,12 +31,14 @@ public class LibrarySearch extends JFrame {
         results.addElement("Computer Networks");
         add(new JScrollPane(resultList), BorderLayout.CENTER);
 
-        JPanel bottom = new JPanel(new FlowLayout());
-        bottom.add(new JButton("Prev"));
-        bottom.add(new JButton("Next"));
-        bottom.add(new JButton("Reserve"));
+        JPanel bottom = new JPanel(new BorderLayout());
+        JPanel actions = new JPanel(new FlowLayout());
+        actions.add(new JButton("Prev"));
+        actions.add(new JButton("Next"));
+        actions.add(new JButton("Reserve"));
+        bottom.add(actions, BorderLayout.CENTER);
+        bottom.add(new JLabel("Ready"), BorderLayout.SOUTH);
         add(bottom, BorderLayout.SOUTH);
-        add(new JLabel("Ready"), BorderLayout.PAGE_END);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(650, 420);
