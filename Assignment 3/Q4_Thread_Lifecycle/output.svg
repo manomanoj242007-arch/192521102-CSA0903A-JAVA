@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="322" viewBox="0 0 1000 322">
+<rect width="100%" height="100%" fill="#161b22"/>
+<text x="28" y="36" fill="#7dd3fc" font-family="monospace" font-size="20">Console Output — Q4_Thread_Lifecycle</text>
+<text x="28" y="76" fill="#e6edf3" font-family="monospace" font-size="18">Station-1 started</text>
+<text x="28" y="104" fill="#e6edf3" font-family="monospace" font-size="18">Station-2 started</text>
+<text x="28" y="132" fill="#e6edf3" font-family="monospace" font-size="18">Station-3 started</text>
+<text x="28" y="160" fill="#e6edf3" font-family="monospace" font-size="18">Station-4 started</text>
+<text x="28" y="188" fill="#e6edf3" font-family="monospace" font-size="18">Station-3 scanned 1 scripts</text>
+<text x="28" y="216" fill="#e6edf3" font-family="monospace" font-size="18">Station-1 scanned 2 scripts</text>
+<text x="28" y="244" fill="#e6edf3" font-family="monospace" font-size="18">Station-2 scanned 3 scripts</text>
+<text x="28" y="272" fill="#e6edf3" font-family="monospace" font-size="18">Station-4 scanned 4 scripts</text>
+<text x="28" y="300" fill="#e6edf3" font-family="monospace" font-size="18">All stations completed.</text>
+</svg>
