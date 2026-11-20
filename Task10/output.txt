@@ -1,0 +1,3 @@
+Slot: 5
+Vehicle: TN05XY5555
+After release: null

@@ -1,0 +1,5 @@
+Floors: 5
+Slots per floor: [20, 25, 30, 35, 40]
+E-bike flat fee: Rs 25.0
+Delivery van peak fee: Rs 120.0
+One-day visitor pass valid: true

@@ -1,0 +1,4 @@
+Two-wheeler fee: Rs 10.0
+Car fee: Rs 60.0
+Daily collection: Rs 70.0
+Active tickets: 0
