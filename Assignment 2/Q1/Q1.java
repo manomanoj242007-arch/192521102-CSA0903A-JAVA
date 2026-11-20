@@ -1,10 +1,127 @@
-import java.util.*;
-/* Analysis: String + in a loop creates intermediate immutable strings; StringBuilder/StringBuffer append to mutable buffers. Repeated concatenation can copy O(nL) characters; builder/buffer O(L). Use StringBuilder per ticket and synchronized append/StringBuffer for shared log. Timings are JVM-dependent. */
+import java.util.Arrays;
+
 public class Q1 {
- static volatile int sink;
- static String plus(String[]f){String s="";for(String x:f)s+=x;return s;}
- static String sb(String[]f){StringBuilder b=new StringBuilder();for(String x:f)b.append(x);return b.toString();}
- static String sf(String[]f){StringBuffer b=new StringBuffer();for(String x:f)b.append(x);return b.toString();}
- static long run(int n,int k,int m){String[]f=new String[k];for(int i=0;i<k;i++)f[i]="F"+i;long t=System.nanoTime();for(int j=0;j<n;j++){String s=m==0?plus(f):m==1?sb(f):sf(f);sink+=s.length();}return System.nanoTime()-t;}
- public static void main(String[]x){int[][]w={{1,6},{1000,50},{5000,20}};for(int[]a:w){System.out.println(Arrays.toString(a));for(int m=0;m<3;m++){long t=0;for(int r=0;r<5;r++)t+=run(a[0],a[1],m);System.out.printf("%s %.3f ms avg%n",new String[]{"String +","StringBuilder","StringBuffer"}[m],t/5e6);}}}
+
+    private static volatile int result;
+
+    // Approach 1: Build ticket text using String concatenation.
+    public static String buildUsingString(String[] fields) {
+        String ticket = "";
+
+        for (String field : fields) {
+            ticket = ticket + field;
+        }
+
+        return ticket;
+    }
+
+    // Approach 2: Build ticket text using StringBuilder.
+    public static String buildUsingStringBuilder(String[] fields) {
+        StringBuilder ticket = new StringBuilder();
+
+        for (String field : fields) {
+            ticket.append(field);
+        }
+
+        return ticket.toString();
+    }
+
+    // Approach 3: Build ticket text using StringBuffer.
+    public static String buildUsingStringBuffer(String[] fields) {
+        StringBuffer ticket = new StringBuffer();
+
+        for (String field : fields) {
+            ticket.append(field);
+        }
+
+        return ticket.toString();
+    }
+
+    // Measure one approach using System.nanoTime().
+    public static long measure(int ticketCount, int fieldCount, int approach) {
+        String[] fields = new String[fieldCount];
+
+        for (int i = 0; i < fieldCount; i++) {
+            fields[i] = "Field" + i + " | ";
+        }
+
+        long startTime = System.nanoTime();
+
+        for (int i = 0; i < ticketCount; i++) {
+            String ticket;
+
+            if (approach == 1) {
+                ticket = buildUsingString(fields);
+            } else if (approach == 2) {
+                ticket = buildUsingStringBuilder(fields);
+            } else {
+                ticket = buildUsingStringBuffer(fields);
+            }
+
+            result += ticket.length();
+        }
+
+        long endTime = System.nanoTime();
+
+        return endTime - startTime;
+    }
+
+    public static void main(String[] args) {
+
+        int[][] workloads = {
+            {1, 6},
+            {1000, 50},
+            {5000, 20}
+        };
+
+        String[] workloadNames = {
+            "Short ticket",
+            "Many fields",
+            "Many tickets"
+        };
+
+        String[] approachNames = {
+            "String",
+            "StringBuilder",
+            "StringBuffer"
+        };
+
+        for (int i = 0; i < workloads.length; i++) {
+
+            int ticketCount = workloads[i][0];
+            int fieldCount = workloads[i][1];
+
+            System.out.println("\n" + workloadNames[i]);
+            System.out.println("Tickets: " + ticketCount);
+            System.out.println("Fields per ticket: " + fieldCount);
+
+            for (int approach = 1; approach <= 3; approach++) {
+
+                long totalTime = 0;
+
+                for (int repeat = 0; repeat < 5; repeat++) {
+                    totalTime += measure(ticketCount, fieldCount, approach);
+                }
+
+                double averageTime = totalTime / 5.0 / 1_000_000.0;
+
+                System.out.printf(
+                    "%s average time: %.3f ms%n",
+                    approachNames[approach - 1],
+                    averageTime
+                );
+            }
+        }
+
+        String[] sampleFields = {
+            "PNR: 12345 | ",
+            "Passenger: Arun | ",
+            "Coach: S1 | ",
+            "Berth: 12 | ",
+            "Fare: 450"
+        };
+
+        System.out.println("\nSample Ticket:");
+        System.out.println(buildUsingStringBuilder(sampleFields));
+    }
 }

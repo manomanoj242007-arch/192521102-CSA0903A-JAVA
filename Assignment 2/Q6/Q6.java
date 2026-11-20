@@ -1,7 +1,86 @@
-import java.util.*;
-/* Analysis: PriorityQueue severity ascending then arrival sequence; offer/poll O(log n), peek O(1). Aging can reduce starvation but rebuild heap after recalculating; never mutate heap keys in place. */
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
+
+class Patient {
+
+    final String name;
+    final int severity;
+    final long arrival;
+
+    Patient(String name, int severity, long arrival) {
+        this.name = name;
+        this.severity = severity;
+        this.arrival = arrival;
+    }
+
+    @Override
+    public String toString() {
+        return name + "(S" + severity + ")";
+    }
+}
+
 public class Q6 {
- static class Patient{final String name;final int severity;final long arrival;Patient(String n,int s,long a){name=n;severity=s;arrival=a;}public String toString(){return name+"(S"+severity+")";}}
- static class Triage{long seq=0;Comparator<Patient>order=Comparator.comparingInt((Patient p)->p.severity).thenComparingLong(p->p.arrival);PriorityQueue<Patient>q=new PriorityQueue<>(order);void admit(String n,int s){if(s<1||s>5)throw new IllegalArgumentException();q.add(new Patient(n,s,seq++));}Patient next(){return q.poll();}List<Patient>waiting(){List<Patient>c=new ArrayList<>(q);c.sort(order);return c;}}
- public static void main(String[]x){Triage t=new Triage();t.admit("Ravi",3);t.admit("Meena",1);t.admit("John",3);t.admit("Asha",5);t.admit("Kumar",1);t.admit("Lata",2);t.admit("Sara",3);t.admit("Vijay",2);System.out.println("Waiting: "+t.waiting());StringBuilder b=new StringBuilder();Patient p;while((p=t.next())!=null)b.append(p).append(' ');System.out.println("Treatment: "+b.toString().trim());}
+
+    private long counter = 0;
+
+    // Lower severity number is served first.
+    // For equal severity, the lower arrival counter is served first.
+    private final PriorityQueue<Patient> queue =
+        new PriorityQueue<>(
+            Comparator.comparingInt((Patient patient) -> patient.severity)
+                .thenComparingLong(patient -> patient.arrival)
+        );
+
+    public void admit(String name, int severity) {
+
+        if (severity < 1 || severity > 5) {
+            throw new IllegalArgumentException(
+                "Severity must be between 1 and 5"
+            );
+        }
+
+        queue.add(new Patient(name, severity, counter++));
+    }
+
+    public Patient next() {
+        return queue.poll();
+    }
+
+    public List<Patient> waitingInTreatmentOrder() {
+
+        List<Patient> waiting = new ArrayList<>(queue);
+
+        waiting.sort(
+            Comparator.comparingInt((Patient patient) -> patient.severity)
+                .thenComparingLong(patient -> patient.arrival)
+        );
+
+        return waiting;
+    }
+
+    public static void main(String[] args) {
+
+        Q6 emergencyRoom = new Q6();
+
+        emergencyRoom.admit("Ravi", 3);
+        emergencyRoom.admit("Meena", 1);
+        emergencyRoom.admit("John", 3);
+        emergencyRoom.admit("Asha", 5);
+        emergencyRoom.admit("Kumar", 1);
+        emergencyRoom.admit("Lata", 2);
+
+        System.out.println("Treatment Order:");
+
+        StringBuilder treatmentOrder = new StringBuilder();
+
+        Patient patient;
+
+        while ((patient = emergencyRoom.next()) != null) {
+            treatmentOrder.append(patient).append(' ');
+        }
+
+        System.out.println(treatmentOrder.toString().trim());
+    }
 }

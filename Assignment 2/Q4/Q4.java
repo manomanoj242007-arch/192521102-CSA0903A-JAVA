@@ -1,7 +1,100 @@
-import java.util.*;
-/* Analysis: HashMap put/get average O(1), unspecified iteration; TreeMap O(log n), sorted iteration; LinkedHashMap average O(1), insertion order. Sorted-array lookup O(log n), insert O(n). */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 public class Q4 {
- static long look(Map<String,Integer>m,List<String>k){long t=System.nanoTime(),sum=0;for(String s:k)sum+=m.getOrDefault(s,0);return(System.nanoTime()-t)/1000000;}
- static void test(int n){Map<String,Integer>h=new HashMap<>(),t=new TreeMap<>(),l=new LinkedHashMap<>();for(int i=n-1;i>=0;i--){String k="M"+i;h.put(k,i);t.put(k,i);l.put(k,i);}List<String>keys=new ArrayList<>();for(int i=0;i<100000;i++)keys.add("M"+(i%n));System.out.println("N="+n+" lookup H/T/L ms="+look(h,keys)+"/"+look(t,keys)+"/"+look(l,keys));System.out.println("Sorted first="+t.keySet().iterator().next()+" insertion first="+l.keySet().iterator().next());}
- public static void main(String[]x){test(1000);test(5000);test(10000);}
+
+    public static void testMaps(int numberOfMedicines) {
+
+        Map<String, Integer> hashMap = new HashMap<>();
+        Map<String, Integer> treeMap = new TreeMap<>();
+        Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
+
+        // Insert medicine records into all three maps.
+        for (int i = numberOfMedicines - 1; i >= 0; i--) {
+
+            String medicineCode = String.format("MED%05d", i);
+            int stock = 100 + i;
+
+            hashMap.put(medicineCode, stock);
+            treeMap.put(medicineCode, stock);
+            linkedHashMap.put(medicineCode, stock);
+        }
+
+        // Prepare 100,000 medicine-code lookups.
+        List<String> searchCodes = new ArrayList<>();
+
+        for (int i = 0; i < 100000; i++) {
+            searchCodes.add(
+                String.format("MED%05d", i % numberOfMedicines)
+            );
+        }
+
+        long startTime = System.nanoTime();
+
+        for (String code : searchCodes) {
+            hashMap.get(code);
+        }
+
+        long hashMapTime = System.nanoTime() - startTime;
+
+        startTime = System.nanoTime();
+
+        for (String code : searchCodes) {
+            treeMap.get(code);
+        }
+
+        long treeMapTime = System.nanoTime() - startTime;
+
+        startTime = System.nanoTime();
+
+        for (String code : searchCodes) {
+            linkedHashMap.get(code);
+        }
+
+        long linkedHashMapTime = System.nanoTime() - startTime;
+
+        System.out.println("\nNumber of medicines: " + numberOfMedicines);
+
+        System.out.println(
+            "HashMap lookup time: " + hashMapTime / 1_000_000.0 + " ms"
+        );
+
+        System.out.println(
+            "TreeMap lookup time: " + treeMapTime / 1_000_000.0 + " ms"
+        );
+
+        System.out.println(
+            "LinkedHashMap lookup time: "
+            + linkedHashMapTime / 1_000_000.0 + " ms"
+        );
+
+        System.out.println(
+            "First code in sorted report: "
+            + treeMap.keySet().iterator().next()
+        );
+
+        System.out.println(
+            "First code in insertion report: "
+            + linkedHashMap.keySet().iterator().next()
+        );
+
+        // Produce the sorted report.
+        System.out.println("Sorted report entries: " + treeMap.size());
+
+        // Produce the insertion-order report.
+        System.out.println(
+            "Insertion-order report entries: " + linkedHashMap.size()
+        );
+    }
+
+    public static void main(String[] args) {
+
+        testMaps(1000);
+        testMaps(5000);
+        testMaps(10000);
+    }
 }

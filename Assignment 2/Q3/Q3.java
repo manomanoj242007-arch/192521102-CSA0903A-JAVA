@@ -1,8 +1,66 @@
-import java.util.*;
-/* Analysis: HashSet uses hashCode to choose a bucket then equals. Equal objects must share hashCode. Immutable key fields are essential. HashSet average O(1), TreeSet O(log n), HashMap keyed by String O(1) average. */
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+class Student {
+
+    private final String regNo;
+    private final String name;
+
+    public Student(String regNo, String name) {
+        this.regNo = regNo;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        if (this == object) {
+            return true;
+        }
+
+        if (!(object instanceof Student)) {
+            return false;
+        }
+
+        Student student = (Student) object;
+
+        return regNo.equals(student.regNo);
+    }
+
+    // hashCode() must use the same identity field as equals().
+    @Override
+    public int hashCode() {
+        return Objects.hash(regNo);
+    }
+
+    @Override
+    public String toString() {
+        return regNo + " " + name;
+    }
+}
+
 public class Q3 {
- static class Broken{final String id;Broken(String i){id=i;}public boolean equals(Object o){return o instanceof Broken b&&id.equals(b.id);}}
- static class Student{final String id,name;Student(String i,String n){id=i;name=n;}public boolean equals(Object o){return this==o||(o instanceof Student s&&id.equals(s.id));}public int hashCode(){return Objects.hash(id);}}
- static class Mutable{String id;Mutable(String i){id=i;}public boolean equals(Object o){return o instanceof Mutable m&&id.equals(m.id);}public int hashCode(){return Objects.hash(id);}}
- public static void main(String[]x){Set<Broken>b=new HashSet<>();b.add(new Broken("A"));b.add(new Broken("A"));System.out.println("Broken set size (typical): "+b.size());Set<Student>s=new HashSet<>();s.add(new Student("A","Arun"));s.add(new Student("B","Divya"));s.add(new Student("A","Arun"));System.out.println("Corrected unique students: "+s.size());Mutable m=new Mutable("A");Set<Mutable>z=new HashSet<>();z.add(m);m.id="B";System.out.println("Contains after key mutation: "+z.contains(m));}
+
+    public static void main(String[] args) {
+
+        Set<Student> present = new HashSet<>();
+
+        // First scan at Gate 1.
+        present.add(new Student("192311001", "Arun"));
+
+        // Second student scan.
+        present.add(new Student("192311002", "Divya"));
+
+        // Same student scanned again at Gate 3.
+        present.add(new Student("192311001", "Arun"));
+
+        System.out.println("Unique students: " + present.size());
+
+        System.out.println("\nStudent details:");
+
+        for (Student student : present) {
+            System.out.println(student);
+        }
+    }
 }

@@ -1,8 +1,92 @@
-import java.util.*;
-/* Diagnosis: ArrayList front insert/remove shifts O(n) references. Redesign Up Next only with ArrayDeque addFirst/removeFirst amortized O(1); retain ArrayList for playlist get(k) O(1). Both use O(n) memory; deque has no indexed access. Benchmark uses identical 5000 operation pairs at three sizes; repeat and average. */
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+
 public class Q7 {
- static volatile int sink;
- static long list(int n,int k){ArrayList<Integer>a=new ArrayList<>();for(int i=0;i<n;i++)a.add(i);long t=System.nanoTime();for(int i=0;i<k;i++){a.add(0,i);sink+=a.remove(0);}return System.nanoTime()-t;}
- static long deque(int n,int k){ArrayDeque<Integer>d=new ArrayDeque<>();for(int i=0;i<n;i++)d.addLast(i);long t=System.nanoTime();for(int i=0;i<k;i++){d.addFirst(i);sink+=d.removeFirst();}return System.nanoTime()-t;}
- public static void main(String[]x){int k=5000;for(int n:new int[]{1000,10000,50000})System.out.printf("N=%d ArrayList=%.3f ms ArrayDeque=%.3f ms%n",n,list(n,k)/1e6,deque(n,k)/1e6);System.out.println("Front operations: O(n) shifts redesigned to amortized O(1).");}
+
+    private static volatile int result;
+
+    // Original design: ArrayList requires shifting when the front is changed.
+    public static long testArrayList(int size, int operations) {
+
+        ArrayList<Integer> playlist = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            playlist.add(i);
+        }
+
+        long startTime = System.nanoTime();
+
+        for (int i = 0; i < operations; i++) {
+            playlist.add(0, i);
+            result += playlist.remove(0);
+        }
+
+        return System.nanoTime() - startTime;
+    }
+
+    // Redesigned Up Next queue: ArrayDeque supports operations at both ends.
+    public static long testArrayDeque(int size, int operations) {
+
+        ArrayDeque<Integer> upNext = new ArrayDeque<>();
+
+        for (int i = 0; i < size; i++) {
+            upNext.addLast(i);
+        }
+
+        long startTime = System.nanoTime();
+
+        for (int i = 0; i < operations; i++) {
+            upNext.addFirst(i);
+            result += upNext.removeFirst();
+        }
+
+        return System.nanoTime() - startTime;
+    }
+
+    public static void main(String[] args) {
+
+        int operations = 5000;
+
+        int[] playlistSizes = {
+            1000,
+            10000,
+            50000
+        };
+
+        System.out.println("Q7: Original and Redesigned Comparison");
+        System.out.println("Front add/remove operations: " + operations);
+
+        for (int size : playlistSizes) {
+
+            long arrayListTime =
+                testArrayList(size, operations);
+
+            long arrayDequeTime =
+                testArrayDeque(size, operations);
+
+            System.out.println("\nPlaylist size: " + size);
+
+            System.out.printf(
+                "ArrayList time: %.3f ms%n",
+                arrayListTime / 1_000_000.0
+            );
+
+            System.out.printf(
+                "ArrayDeque time: %.3f ms%n",
+                arrayDequeTime / 1_000_000.0
+            );
+        }
+
+        System.out.println(
+            "\nRedesign objective: reduce front operation cost."
+        );
+
+        System.out.println(
+            "ArrayList front insertion/removal: O(n)."
+        );
+
+        System.out.println(
+            "ArrayDeque end operations: amortized O(1)."
+        );
+    }
 }
